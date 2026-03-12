@@ -154,7 +154,7 @@ If this message is not due to an upcoming maintenance downtime, then it means th
 
 ## How can I get information on CCR clusters such as how busy they are and wait times?  
 
-From a login node, use the command `sqstat` to see a comprehensive overview of cluster usage.  This information is also displayed on our [cluster status pages](https://www.buffalo.edu/ccr/support/machine-status.html).  To find more detailed information on node availability, use the `snodes` command.  
+From a login node, use the command `sqstat` to see a comprehensive overview of cluster usage.  This information is also displayed on our [cluster status pages](https://www.buffalo.edu/ccr/support/research_facilities/ub-hpc/ubhpc-status.html).  To find more detailed information on node availability, use the `snodes` command.  
 
 ## Why do I get an ‘Invalid Account, Partition, or QOS Specification’ error when I try to run a job?  
 
@@ -166,7 +166,7 @@ salloc: error: Job submit/allocate failed: Invalid account or account/partition 
 sbatch: error: Batch job submission failed: Invalid partition or qos specification
 ```
 
-CCR uses Quality of Service (QOS) to restrict access to partitions and to provide research groups that support CCR financially with a boost in their job priorities. Slurm will use your default account, unless you specify differently in your job script or when starting an OnDemand app.  Use the `slimits` command to see what accounts and QOS settings you have access to. This is managed in [ColdFront under allocations](portals/coldfront.md).   More details on QOS and partition limits can be [found here](hpc/jobs.md#slurm-directives-partitions-qos).  Information on [becoming a CCR supporter can be found on our website](https://www.buffalo.edu/ccr/support/ccr-help/accounts.html#boost).  
+CCR uses Quality of Service (QOS) to restrict access to partitions and to provide research groups that support CCR financially with a boost in their job priorities. Slurm will use your default account, unless you specify differently in your job script or when starting an OnDemand app.  Use the `slimits` command to see what accounts and QOS settings you have access to. This is managed in [ColdFront under allocations](portals/coldfront.md).   More details on QOS and partition limits can be [found here](hpc/jobs.md#slurm-directives-partitions-qos).  Information on [becoming a CCR supporter can be found here](getting-access.md#supporters-priority-boost).  
 
 
 ## Why am I getting a QOSMaxSubmitJobPerUserLimit error when I try to submit a job?

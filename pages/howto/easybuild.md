@@ -1,4 +1,4 @@
-==This document is a work in progress.  The example shown is a simple one and uses the `ccrsoft/2023.01` software release.  It does not address all the possible issues you might run into compiling and installing software.==
+==This document is a work in progress and does not address all the possible issues you might run into compiling and installing software.==
 
 # Easybuild  
 
