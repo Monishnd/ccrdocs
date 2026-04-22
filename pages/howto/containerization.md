@@ -375,3 +375,47 @@ This virtual environment is accessible outside of the container as well as insid
 - Not all packages will install correctly inside a virtual environment.  See our warnings over [here](../howto/python.md#installing-packages-inside-the-virtual-environment).  
 - Because you are intentionally attempting to use already installed python packages with your virtual environment, you may run into conflicts.  In that event, you may need to [create your own container](#building-images-with-apptainer) from scratch installing all the packages you need rather than using a pre-built one from NVIDIA.  However, you can start with the NVIDIA container of your choice as the base image.    
 - If you're using a container, we do NOT recommend also using modules CCR's [software environment](../software/modules.md).  These will most likely conflict.
+
+## Container-Mod
+
+Container-Mod is a tool designed to simplify the use of containers in High Performance Computing (HPC) environments. Container-Mod bridges the gap between container platforms such as Docker or Singularity/Apptainer and traditional HPC setups by converting container images into environment modules that are easy to load and use. Container-Mod enables the smooth integration of containerized applications into existing environments without requiring users to engage directly with the container itself.
+
+### Key Features
+
+- **Container Image Access**:- Pulls container images from DockerHub or locally stored files.
+- **Modulefile Generation**:- Automatically creates modulefiles compatible with Lmod or Tcl-based system.
+- **Wrapper Scripts**:- Generates scripts for the programs used by the container, so they can be used just like native binaries.
+- **Jupyter Kernel (Optional)**:- Creates Jupyter kernels for supported containers, allowing interactive workflows through Jupyter Lab/Notebook.
+
+### Benefits and Limitations
+
+**Benefits**:- Container-Mod works well with HPC environments where module based systems are already present, and you want to use the portability and consistency of containerized software. It also eliminates the need for users to manage contaienrs manually. Instead of dealing with image pulls, exclusive commands, or configuration details, users can use generated modulefiles and wrapper scripts. Users can load and unload container modules in a predictable and consistent way, just as they would with traditionally installed applications. Container modules can also work across different CCR software releases, improving portability and reproducibility.
+
+**Limitations**:- However, Container-Mod also has some limitations. It introduces an additional layer between the user and the container, which can sometimes make debugging more challenging when problems occur inside the container. Personal tuning and customization are more limited than direct container usage. Additionally, not all application features or programs are usable through the module interface with wrapper scripts, which limits an array of use cases.
+
+> [!IMPORTANT]
+> Furthermore, as of this release, the Jupyter kernel option is available with limited functionality, and CCR staff cannot guarantee its stability or provide support for it.
+
+### Example Container-Mod Workflow
+
+In this example, we'll use the FDS container image from [DockerHub](https://hub.docker.com/r/satcomx00/fds) and process it with Container-Mod to generate a ready-to-use environment module. We will use personal mode, where all files are generated in user's `$HOME` directory. More details on profiles and additional configuration options are provided in the sections below.
+
+1. Clone the [Container-Mod repository](https://github.com/TuftsRT/container-mod) into your working directory.
+
+**Important files and their descriptions**
+
+- `container-Mod`: Main executable script
+- `repos/`: Stores all metadata for all software used by commands such as `module spider`
+- `profiles/`: Stores different profiles that define where generated files are placed, instead of the default personal mode (`$HOME`)
+
+**Generated Directories and Files (Personal Mode)**
+
+- `~/container-apps/`: Directory created in personal that contains all files and resources used by the generated module<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a. `container-apps/images/`: Stores container images pulled from registries such as DockerHub. (Local images stay in their original location)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. `container-apps/repos/`: Contains metadata for all configured software, used by commands like `module spider`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c. `container-apps/tools/`: Holds generated executables (wrapper scripts) for using specific software programs<br>
+- `~/privatemodules/`: Stores generated modulefiles (`.lua`) for Lmod
+
+**Subcommands used with the `container-mod` script**
+
+- `pull`:
